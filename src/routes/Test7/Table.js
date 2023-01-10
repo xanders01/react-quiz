@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import DATA from "./_data";
+import { InputContext } from "./context";
 
 const Table = () => {
+  const { username } = useContext(InputContext)
+
   return (
     <table>
       <thead>
@@ -11,13 +15,19 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        {DATA.map((eachrow, idx) => (
-          <tr key={idx}>
-            <td>{eachrow.name}</td>
-            <td>{eachrow.age}</td>
-            <td>{eachrow.address}</td>
-          </tr>
-        ))}
+        {DATA.map((eachrow, idx) => {
+          if ((eachrow.name.toLocaleLowerCase() !== (username.toLocaleLowerCase() || "")) && username) {            
+            return null
+          }
+
+          return (
+            <tr key={idx}>
+              <td>{eachrow.name}</td>
+              <td>{eachrow.age}</td>
+              <td>{eachrow.address}</td>
+            </tr>
+          )
+        })}
       </tbody>
     </table>
   )

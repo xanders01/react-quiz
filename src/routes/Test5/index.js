@@ -3,6 +3,8 @@ import { cssWrapper } from './style';
 
 import Comp1 from "./Comp1";
 import Comp3 from "./Comp3";
+import { InputContextProvider } from './context'
+import { useEffect, useState } from 'react';
 
 const question = (
   <ul>
@@ -25,20 +27,61 @@ const question = (
   </ul>
 );
 
+// Context
+
+
 const Test5 = () => {
-  return(
+  const [number, setNumber] = useState("")
+  const [number1, setNumber1] = useState("")
+  const [number2, setNumber2] = useState("")
+
+  useEffect(() => {
+    setNumber(number2)
+    setNumber1(number2)
+  }, [number2])
+
+  const handleActionButton = (value) => {
+    setNumber((currentNumber) => parseInt(currentNumber) + value)
+  }
+
+  const handleSetNumber = (e, cb) => {
+    const value = e.target.value
+    if (!e.target.validity.valid) {
+      return
+    }
+
+    cb(value)
+  }
+
+  const numberProvider = {
+    number, setNumber,
+    number1, setNumber1,
+    number2, setNumber2,
+    handleSetNumber
+  }
+
+  return (
     <div>
       {question}
-      <button id="numbermin" type="button">-</button>
-      <input id="mynumber" type="text" placeholder="input mynumber"/>
-      <button id="numberplus" type="button">+</button>
-      <br/>
-      <br/>
+      <button id="numbermin" type="button" onClick={e => handleActionButton(-1)}>-</button>
+      <input
+        id="mynumber"
+        type="text"
+        pattern="[0-9]*"
+        placeholder="input mynumber"
+        value={number}
+        onChange={(e) => handleSetNumber(e, setNumber)}
+      />
+      <button id="numberplus" type="button" onClick={e => handleActionButton(1)}>+</button>
+      <br />
+      <br />
       <div className={cssWrapper}>
-        The inputted value is [ODD / EVEN]*
+        The inputted value is [{number === "" ? "ODD/EVEN" : number % 2 === 0 ? "EVEN" : "ODD"}]*
       </div>
-      <Comp1 />
-      <Comp3 />
+      <InputContextProvider value={numberProvider}>
+        <Comp1 />
+        <Comp3 />
+      </InputContextProvider>
     </div>
   )
 }

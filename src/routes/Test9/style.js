@@ -8,6 +8,8 @@ export const cssSpace = css({
   alignItems: 'center',
   justifyContent: 'center',
   backgroundColor: 'black',
+  position: 'relative',
+  overflow: 'hidden'
 });
 
 export const cssSun = css({
@@ -17,9 +19,14 @@ export const cssSun = css({
   borderRadius: 40,
 });
 
-export const cssPlanet = () => css({
-  width: 20,
-  height: 20,
-  borderRadius: 10,
-  backgroundColor: 'red',
-});
+export const cssPlanet = (planetData) => {
+  return css({
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: planetData.color,
+    position: 'absolute',
+    top: planetData.x,
+    left: planetData.y,
+  });
+}

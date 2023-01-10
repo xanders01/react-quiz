@@ -1,15 +1,16 @@
 import { cssModal } from "./style"
 
-const Modal = () => {
+const Modal = ({ data, setIsSubmit }) => {
+  const { name, age, address } = data
   return (
     <div className={cssModal}>
-      Name: _____
-      <br/>
-      Age: _____
-      <br/>
-      Address: _____
-      <br/>
-      <button>Reset</button>
+      Name: {name}
+      <br />
+      Age: {age}
+      <br />
+      Address: {address}
+      <br />
+      <button onClick={() => setIsSubmit(false)}>Reset</button>
     </div>
   );
 };

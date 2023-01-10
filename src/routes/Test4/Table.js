@@ -1,6 +1,6 @@
-// import DATA from "./_data";
+import DATA from "./_data"
 
-const Table = () => {
+const Table = ({ searchParam }) => {
   return (
     <table>
       <thead>
@@ -9,6 +9,22 @@ const Table = () => {
           <th>Age</th>
           <th>Address</th>
         </tr>
+        {
+          DATA.map(({ name, age, address }, i) => {
+            if (name.toLowerCase() !== searchParam.toLowerCase() && searchParam) {
+              return null
+            }
+
+            return (
+              <tr key={i + name}>
+                <td >{name}</td>
+                <td>{age}</td>
+                <td>{address}</td>
+              </tr>
+            )
+          })
+        }
+
       </thead>
     </table>
   )

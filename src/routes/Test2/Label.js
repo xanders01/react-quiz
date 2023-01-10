@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { css } from 'react-emotion';
 
 const cssLabel = css({
@@ -17,13 +18,13 @@ const cssLabel = css({
   }
 })
 
-const Label = () => {
+const Label = ({ label, setLabel }) => {      
   return (
     <span className={cssLabel}>
-      RENDER VALUE HERE
-      <button type="button">⊗</button>
+      {label}
+      <button type="button" onClick={() => setLabel("")}>⊗</button>
     </span>
   )
 }
 
-export default Label;
+export default memo(Label);
